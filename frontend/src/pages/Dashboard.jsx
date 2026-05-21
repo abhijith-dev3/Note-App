@@ -17,27 +17,32 @@ export default function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+  useEffect(() => { fetchNotes(); }, []);
+
+  const filtered = notes.filter((note) =>
+    note.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-stone-50 p-6 md:p-10">
-      <h1 className="font-lora text-3xl font-normal tracking-tight text-stone-800 mb-7">
-        My <span className="text-terracotta">notes</span>
-      </h1>
+    <div className="min-h-screen bg-[#111110] px-7 py-10">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <h1 className="font-[Playfair_Display] text-[28px] font-medium text-[#e8e4dc] tracking-tight">
+            My Notes
+          </h1>
+          <p className="font-mono text-xs text-[#6b6760] mt-1">
+            // {notes.length} thoughts captured
+          </p>
+        </div>
 
-      <NoteForm onNoteAdded={fetchNotes} />
-      <SearchBar search={search} setSearch={setSearch} />
+        <NoteForm onNoteAdded={fetchNotes} />
+        <SearchBar search={search} setSearch={setSearch} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2">
-        {notes
-          .filter((note) =>
-            note.title.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((note) => (
-            <NoteCard key={note.id} note={note} onDelete={fetchNotes} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          {filtered.map((note, i) => (
+            <NoteCard key={note.id} note={note} index={i + 1} onDelete={fetchNotes} />
           ))}
+        </div>
       </div>
     </div>
   );

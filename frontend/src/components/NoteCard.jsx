@@ -1,6 +1,6 @@
 import API from "../services/api";
 
-export default function NoteCard({ note, onDelete }) {
+export default function NoteCard({ note, index, onDelete }) {
   const handleDelete = async () => {
     try {
       await API.delete(`/notes/${note._id}`);
@@ -11,39 +11,27 @@ export default function NoteCard({ note, onDelete }) {
   };
 
   return (
-    <div className="group relative bg-white border border-stone-100 rounded-2xl p-5 flex flex-col transition-all duration-200 hover:border-stone-200 overflow-hidden">
-  
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-terracotta opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-t-2xl" />
-
-      <h2 className="font-lora text-[15px] font-medium text-stone-800 mb-2 leading-snug">
+    <div className="bg-[#181715] border border-[#2a2825] rounded-2xl p-5 flex flex-col hover:border-[#3d3a35] transition-all duration-200">
+      <p className="font-mono text-[10px] text-[#4a4845] mb-2.5">
+        {String(index).padStart(2, "0")} —
+      </p>
+      <h2 className="font-[Playfair_Display] text-[15px] font-medium text-[#e8e4dc] mb-2 leading-snug">
         {note.title}
       </h2>
-      <p className="text-[13px] text-stone-500 leading-relaxed flex-1 mb-4">
+      <p className="font-mono text-xs text-[#6b6760] leading-relaxed flex-1 mb-5">
         {note.content}
       </p>
-
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-3 border-t border-[#2a2825]">
         <button
           onClick={handleDelete}
-          className="inline-flex items-center gap-1.5 text-xs text-stone-400 border border-stone-200 rounded-lg px-3 py-1.5 transition-all duration-150 hover:text-red-500 hover:border-red-300 hover:bg-red-50"
+          className="font-mono text-[11px] text-[#4a4845] border border-[#2a2825] rounded-lg px-3 py-1.5 flex items-center gap-1.5 hover:text-red-400 hover:border-red-900/50 hover:bg-red-950/20 transition-all"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6l-1 14H6L5 6" />
-            <path d="M10 11v6M14 11v6" />
-            <path d="M9 6V4h6v2" />
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14H6L5 6"/>
+            <path d="M9 6V4h6v2"/>
           </svg>
-          Delete
+          delete
         </button>
       </div>
     </div>
